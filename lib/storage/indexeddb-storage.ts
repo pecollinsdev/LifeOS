@@ -29,6 +29,11 @@ interface LifeOSDB extends DBSchema {
 }
 
 /**
+ * Valid store names for type safety.
+ */
+type StoreName = 'tasks' | 'habits' | 'finances' | 'fitness' | 'nutrition';
+
+/**
  * IndexedDB-based storage implementation.
  * 
  * Uses IndexedDB for reliable client-side storage that works well
@@ -39,9 +44,9 @@ interface LifeOSDB extends DBSchema {
 export class IndexedDBStorage<T extends IStorable> implements IStorage<T> {
   private dbName = 'lifeos-db';
   private dbVersion = 1;
-  private storeName: keyof LifeOSDB;
+  private storeName: StoreName;
 
-  constructor(storeName: keyof LifeOSDB) {
+  constructor(storeName: StoreName) {
     this.storeName = storeName;
   }
 
