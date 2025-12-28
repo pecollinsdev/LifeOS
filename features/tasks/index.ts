@@ -1,5 +1,6 @@
 // Models
-export { Task, createTask } from './models/Task';
+export type { Task } from './models/Task';
+export { createTask } from './models/Task';
 export { TaskPriority, TaskStatus } from './models/Task';
 
 // Services

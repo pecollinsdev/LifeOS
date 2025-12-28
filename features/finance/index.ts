@@ -1,5 +1,6 @@
 // Models
-export { Transaction, createTransaction } from './models/Transaction';
+export type { Transaction } from './models/Transaction';
+export { createTransaction } from './models/Transaction';
 export { TransactionType, TransactionCategory } from './models/Transaction';
 
 // Placeholder for future implementation
