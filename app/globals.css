@@ -77,7 +77,7 @@
   --color-neutral-800: rgb(31 41 55);
   --color-neutral-900: rgb(17 24 39);
   
-  /* Spacing Scale */
+  /* Spacing Scale - iOS-style (more generous) */
   --spacing-xs: 0.25rem;   /* 4px */
   --spacing-sm: 0.5rem;    /* 8px */
   --spacing-md: 1rem;      /* 16px */
@@ -85,6 +85,12 @@
   --spacing-xl: 2rem;      /* 32px */
   --spacing-2xl: 3rem;     /* 48px */
   --spacing-3xl: 4rem;     /* 64px */
+  
+  /* iOS-style transition timing */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
   
   /* Typography - Font Sizes */
   --font-size-xs: 0.75rem;     /* 12px */
@@ -105,17 +111,19 @@
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
   
-  /* Border Radius */
-  --radius-sm: 0.375rem;   /* 6px */
-  --radius-md: 0.5rem;     /* 8px */
-  --radius-lg: 0.75rem;    /* 12px */
-  --radius-xl: 1rem;       /* 16px */
+  /* Border Radius - iOS-style (more rounded) */
+  --radius-sm: 0.5rem;     /* 8px - small elements */
+  --radius-md: 0.75rem;    /* 12px - buttons, inputs */
+  --radius-lg: 1rem;       /* 16px - cards */
+  --radius-xl: 1.25rem;    /* 20px - large cards */
+  --radius-2xl: 1.5rem;    /* 24px - extra large */
   --radius-full: 9999px;
   
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  /* Shadows - iOS-style (subtle, layered) */
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 /* ============================================
@@ -125,131 +133,82 @@
    Dark mode uses a neutral, calm palette optimized
    for low-light viewing. Avoids pure black/white
    extremes for better comfort.
+   
+   Implementation:
+   - ThemeProvider sets data-theme="dark" or data-theme="light" on <html>
+   - CSS variables are overridden via [data-theme="dark"] selector
+   - This approach is more reliable than media queries alone
+   - Prevents flash of wrong theme on page load
    ============================================ */
 
-/* Manual dark mode (via data-theme attribute) */
+/* Dark mode theme - Applied when data-theme="dark" is set on <html> */
 :root[data-theme="dark"] {
-    /* Colors - Background & Surface */
-    --color-background: rgb(17 24 39);      /* gray-900 - dark but not pure black */
-    --color-surface: rgb(31 41 55);         /* gray-800 - elevated surfaces */
-    --color-surface-hover: rgb(55 65 81);    /* gray-700 - hover state */
-    
-    /* Colors - Text */
-    --color-text-primary: rgb(249 250 251);  /* gray-50 - high contrast */
-    --color-text-secondary: rgb(209 213 219); /* gray-300 - secondary text */
-    --color-text-tertiary: rgb(156 163 175);  /* gray-400 - tertiary text */
-    --color-text-disabled: rgb(107 114 128);  /* gray-500 - disabled */
-    
-    /* Colors - Primary (Brand) - Keep same, works well in dark */
-    /* Primary colors remain the same for brand consistency */
-    
-    /* Colors - Semantic (Status) - Adjusted for dark mode */
-    --color-success-bg: rgb(20 83 45);        /* dark green background */
-    --color-success-border: rgb(34 197 94);  /* bright green border */
-    --color-success-text: rgb(187 247 208);   /* light green text */
-    --color-success-light: rgb(34 197 94);    /* lighter green */
-    --color-success-dark: rgb(22 163 74);    /* darker green */
-    
-    --color-warning-bg: rgb(113 63 18);       /* dark amber background */
-    --color-warning-border: rgb(251 191 36); /* bright amber border */
-    --color-warning-text: rgb(253 230 138);  /* light amber text */
-    --color-warning-light: rgb(251 191 36);  /* lighter amber */
-    --color-warning-dark: rgb(217 119 6);    /* darker amber */
-    
-    --color-error-bg: rgb(127 29 29);         /* dark red background */
-    --color-error-border: rgb(248 113 113);  /* bright red border */
-    --color-error-text: rgb(254 202 202);    /* light red text */
-    --color-error-light: rgb(248 113 113);   /* lighter red */
-    --color-error-dark: rgb(220 38 38);      /* darker red */
-    
-    --color-info-bg: rgb(30 58 138);          /* dark blue background */
-    --color-info-border: rgb(96 165 250);     /* bright blue border */
-    --color-info-text: rgb(191 219 254);     /* light blue text */
-    --color-info-light: rgb(96 165 250);     /* lighter blue */
-    --color-info-dark: rgb(37 99 235);       /* darker blue */
-    
-    /* Colors - Neutral (Gray) - Inverted scale */
-    --color-neutral-50: rgb(17 24 39);       /* dark-900 */
-    --color-neutral-100: rgb(31 41 55);      /* dark-800 */
-    --color-neutral-200: rgb(55 65 81);      /* dark-700 */
-    --color-neutral-300: rgb(75 85 99);      /* dark-600 */
-    --color-neutral-400: rgb(107 114 128);   /* dark-500 */
-    --color-neutral-500: rgb(156 163 175);   /* dark-400 */
-    --color-neutral-600: rgb(209 213 219);   /* dark-300 */
-    --color-neutral-700: rgb(229 231 235);   /* dark-200 */
-    --color-neutral-800: rgb(243 244 246);   /* dark-100 */
-    --color-neutral-900: rgb(249 250 251);   /* dark-50 */
-    
-    /* Shadows - Adjusted for dark mode (lighter shadows) */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-}
-
-/* System preference dark mode (only if user hasn't manually set a preference) */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    /* Colors - Background & Surface */
-    --color-background: rgb(17 24 39);
-    --color-surface: rgb(31 41 55);
-    --color-surface-hover: rgb(55 65 81);
-    
-    /* Colors - Text */
-    --color-text-primary: rgb(249 250 251);
-    --color-text-secondary: rgb(209 213 219);
-    --color-text-tertiary: rgb(156 163 175);
-    --color-text-disabled: rgb(107 114 128);
-    
-    /* Colors - Semantic (Status) - Adjusted for dark mode */
-    --color-success-bg: rgb(20 83 45);
-    --color-success-border: rgb(34 197 94);
-    --color-success-text: rgb(187 247 208);
-    --color-success-light: rgb(34 197 94);
-    --color-success-dark: rgb(22 163 74);
-    
-    --color-warning-bg: rgb(113 63 18);
-    --color-warning-border: rgb(251 191 36);
-    --color-warning-text: rgb(253 230 138);
-    --color-warning-light: rgb(251 191 36);
-    --color-warning-dark: rgb(217 119 6);
-    
-    --color-error-bg: rgb(127 29 29);
-    --color-error-border: rgb(248 113 113);
-    --color-error-text: rgb(254 202 202);
-    --color-error-light: rgb(248 113 113);
-    --color-error-dark: rgb(220 38 38);
-    
-    --color-info-bg: rgb(30 58 138);
-    --color-info-border: rgb(96 165 250);
-    --color-info-text: rgb(191 219 254);
-    --color-info-light: rgb(96 165 250);
-    --color-info-dark: rgb(37 99 235);
-    
-    /* Colors - Neutral (Gray) - Inverted scale */
-    --color-neutral-50: rgb(17 24 39);
-    --color-neutral-100: rgb(31 41 55);
-    --color-neutral-200: rgb(55 65 81);
-    --color-neutral-300: rgb(75 85 99);
-    --color-neutral-400: rgb(107 114 128);
-    --color-neutral-500: rgb(156 163 175);
-    --color-neutral-600: rgb(209 213 219);
-    --color-neutral-700: rgb(229 231 235);
-    --color-neutral-800: rgb(243 244 246);
-    --color-neutral-900: rgb(249 250 251);
-    
-    /* Shadows - Adjusted for dark mode */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-  }
+  /* Colors - Background & Surface */
+  --color-background: rgb(17 24 39);      /* gray-900 - dark but not pure black */
+  --color-surface: rgb(31 41 55);         /* gray-800 - elevated surfaces */
+  --color-surface-hover: rgb(55 65 81);    /* gray-700 - hover state */
+  
+  /* Colors - Text */
+  --color-text-primary: rgb(249 250 251);  /* gray-50 - high contrast */
+  --color-text-secondary: rgb(209 213 219); /* gray-300 - secondary text */
+  --color-text-tertiary: rgb(156 163 175);  /* gray-400 - tertiary text */
+  --color-text-disabled: rgb(107 114 128);  /* gray-500 - disabled */
+  
+  /* Colors - Primary (Brand) - Keep same, works well in dark */
+  /* Primary colors remain the same for brand consistency */
+  
+  /* Colors - Semantic (Status) - Adjusted for dark mode */
+  --color-success-bg: rgb(20 83 45);        /* dark green background */
+  --color-success-border: rgb(34 197 94);  /* bright green border */
+  --color-success-text: rgb(187 247 208);   /* light green text */
+  --color-success-light: rgb(34 197 94);    /* lighter green */
+  --color-success-dark: rgb(22 163 74);    /* darker green */
+  
+  --color-warning-bg: rgb(113 63 18);       /* dark amber background */
+  --color-warning-border: rgb(251 191 36); /* bright amber border */
+  --color-warning-text: rgb(253 230 138);  /* light amber text */
+  --color-warning-light: rgb(251 191 36);  /* lighter amber */
+  --color-warning-dark: rgb(217 119 6);    /* darker amber */
+  
+  --color-error-bg: rgb(127 29 29);         /* dark red background */
+  --color-error-border: rgb(248 113 113);  /* bright red border */
+  --color-error-text: rgb(254 202 202);    /* light red text */
+  --color-error-light: rgb(248 113 113);   /* lighter red */
+  --color-error-dark: rgb(220 38 38);      /* darker red */
+  
+  --color-info-bg: rgb(30 58 138);          /* dark blue background */
+  --color-info-border: rgb(96 165 250);     /* bright blue border */
+  --color-info-text: rgb(191 219 254);     /* light blue text */
+  --color-info-light: rgb(96 165 250);     /* lighter blue */
+  --color-info-dark: rgb(37 99 235);       /* darker blue */
+  
+  /* Colors - Neutral (Gray) - Inverted scale */
+  --color-neutral-50: rgb(17 24 39);       /* dark-900 */
+  --color-neutral-100: rgb(31 41 55);      /* dark-800 */
+  --color-neutral-200: rgb(55 65 81);      /* dark-700 */
+  --color-neutral-300: rgb(75 85 99);      /* dark-600 */
+  --color-neutral-400: rgb(107 114 128);   /* dark-500 */
+  --color-neutral-500: rgb(156 163 175);   /* dark-400 */
+  --color-neutral-600: rgb(209 213 219);   /* dark-300 */
+  --color-neutral-700: rgb(229 231 235);   /* dark-200 */
+  --color-neutral-800: rgb(243 244 246);   /* dark-100 */
+  --color-neutral-900: rgb(249 250 251);   /* dark-50 */
+  
+  /* Shadows - Adjusted for dark mode (lighter shadows) */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
 }
 
 /* Mobile-first base styles */
 @layer base {
   html {
-    /* Smooth theme transitions */
+    /* Declare support for both color schemes - helps with system UI elements */
     color-scheme: light dark;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    /* Prevent flash of wrong theme - ThemeProvider will set data-theme immediately */
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
   }
   
   body {
@@ -257,8 +216,8 @@
     color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Smooth transitions for theme changes */
-    transition: background-color 0.2s ease, color 0.2s ease;
+    /* Smooth transitions for theme changes - only on properties that change */
+    transition: background-color var(--transition-base), color var(--transition-base);
     /* iOS safe area support */
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
@@ -268,20 +227,22 @@
   
   /* Performance: Scoped transitions instead of global * selector
      Global transitions on all elements are expensive on mobile.
-     Only apply to elements that actually need transitions. */
+     Only apply to elements that actually need transitions.
+     iOS-style smooth transitions with cubic-bezier easing. */
   button,
   a,
   input,
   select,
   [class*="transition"] {
-    transition: background-color 0.2s ease, 
-                color 0.2s ease, 
-                border-color 0.2s ease;
+    transition: background-color var(--transition-base), 
+                color var(--transition-base), 
+                border-color var(--transition-base),
+                transform var(--transition-fast);
   }
   
   /* Shadows transition separately (less common) */
   [class*="shadow"] {
-    transition: box-shadow 0.2s ease;
+    transition: box-shadow var(--transition-base);
   }
 
   /* Prevent text selection on mobile for better UX */

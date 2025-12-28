@@ -46,7 +46,7 @@ export const OfflineIndicator: React.FC = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 bg-neutral-800 text-neutral-100 text-center py-2 px-4 text-sm flex items-center justify-center gap-2 animate-slide-down pt-safe-top"
+      className="fixed top-0 left-0 right-0 z-50 bg-gray-800 text-gray-100 text-center py-2 px-4 text-sm flex items-center justify-center gap-2 animate-slide-down pt-safe-top"
       role="status"
       aria-live="polite"
     >
@@ -57,7 +57,7 @@ export const OfflineIndicator: React.FC = () => {
         fill="none"
         stroke="currentColor"
         strokeWidth={2}
-        className="text-neutral-400"
+        className="text-gray-400"
       >
         <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
       </svg>

@@ -7,10 +7,14 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 
 /**
- * Input component optimized for mobile devices.
+ * Input component with iOS-style design.
  * 
- * Includes proper label association, error states, and
- * mobile-friendly sizing and spacing.
+ * Features:
+ * - iOS-style rounded corners (12px)
+ * - Smooth focus transitions
+ * - Proper label spacing
+ * - Error and helper text states
+ * - Touch-optimized sizing (48px min height)
  */
 export const Input: React.FC<InputProps> = ({
   label,
@@ -27,27 +31,27 @@ export const Input: React.FC<InputProps> = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-sm font-medium text-neutral-700 mb-1.5"
+          className="block text-sm font-semibold text-text-secondary mb-2"
         >
           {label}
         </label>
       )}
       <input
         id={inputId}
-        className={`w-full px-4 py-3 text-base border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+        className={`w-full px-4 py-3.5 text-base bg-surface border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-background focus:border-transparent min-h-[48px] text-text-primary ${
           error
             ? 'border-error-dark focus:ring-error-dark'
-            : 'border-neutral-300 focus:border-transparent'
+            : 'border-gray-300 focus:border-transparent'
         } ${className}`}
         {...props}
       />
       {error && (
-        <p className="mt-1.5 text-sm text-error-text" role="alert">
+        <p className="mt-2 text-sm font-medium text-error-text" role="alert">
           {error}
         </p>
       )}
       {helperText && !error && (
-        <p className="mt-1.5 text-sm text-neutral-500">{helperText}</p>
+        <p className="mt-2 text-sm text-text-tertiary">{helperText}</p>
       )}
     </div>
   );

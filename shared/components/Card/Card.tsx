@@ -8,10 +8,14 @@ export interface CardProps {
 }
 
 /**
- * Card component for containing content sections.
+ * Card component with iOS-style design.
  * 
- * Mobile-optimized with touch-friendly interactions and
- * appropriate spacing for small screens.
+ * Features:
+ * - iOS-style rounded corners (16px)
+ * - Subtle layered shadows
+ * - Smooth transitions
+ * - Touch-optimized interactions
+ * - Generous padding options
  */
 export const Card: React.FC<CardProps> = ({
   children,
@@ -21,18 +25,18 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   const paddingClasses = {
     none: '',
-    sm: 'p-3',
-    md: 'p-4',
+    sm: 'p-4',
+    md: 'p-5',
     lg: 'p-6',
   };
 
   const interactiveClasses = onClick
-    ? 'cursor-pointer active:scale-[0.98] transition-transform'
+    ? 'cursor-pointer active:scale-[0.98] transition-all duration-150 hover:shadow-md'
     : '';
 
   return (
     <div
-      className={`bg-surface rounded-xl shadow-sm border border-neutral-200 ${paddingClasses[padding]} ${interactiveClasses} ${className}`}
+      className={`bg-surface rounded-2xl shadow-sm border border-gray-200/60 ${paddingClasses[padding]} ${interactiveClasses} ${className}`}
       onClick={onClick}
     >
       {children}

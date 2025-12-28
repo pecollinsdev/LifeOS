@@ -1,9 +1,11 @@
-import { PlaceholderPage } from '@/shared/components/PlaceholderPage';
+import { FinancePage } from '@/features/finance/pages/FinancePage';
 
 /**
- * Finance page route (placeholder).
+ * Finance page route.
+ * 
+ * Renders the main finance tracking interface.
  */
 export default function FinanceRoute() {
-  return <PlaceholderPage title="Finance" description="Financial tracking coming soon" />;
+  return <FinancePage />;
 }
 

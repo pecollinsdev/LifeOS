@@ -7,11 +7,10 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 }
 
 /**
- * Select component optimized for mobile devices.
+ * Select component with iOS-style design.
  * 
  * Matches Input component styling for consistency.
- * Includes proper label association, error states, and
- * mobile-friendly sizing and spacing.
+ * Features iOS-style rounded corners and smooth transitions.
  */
 export const Select: React.FC<SelectProps> = ({
   label,
@@ -29,16 +28,16 @@ export const Select: React.FC<SelectProps> = ({
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-sm font-medium text-gray-700 mb-1.5"
+          className="block text-sm font-semibold text-text-secondary mb-2"
         >
           {label}
         </label>
       )}
       <select
         id={selectId}
-        className={`w-full px-4 py-3 text-base border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+        className={`w-full px-4 py-3.5 text-base bg-surface border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-background focus:border-transparent min-h-[48px] text-text-primary ${
           error
-            ? 'border-red-500 focus:ring-red-500'
+            ? 'border-error-dark focus:ring-error-dark'
             : 'border-gray-300 focus:border-transparent'
         } ${className}`}
         {...props}
@@ -46,12 +45,12 @@ export const Select: React.FC<SelectProps> = ({
         {children}
       </select>
       {error && (
-        <p className="mt-1.5 text-sm text-red-600" role="alert">
+        <p className="mt-2 text-sm font-medium text-error-text" role="alert">
           {error}
         </p>
       )}
       {helperText && !error && (
-        <p className="mt-1.5 text-sm text-gray-500">{helperText}</p>
+        <p className="mt-2 text-sm text-text-tertiary">{helperText}</p>
       )}
     </div>
   );

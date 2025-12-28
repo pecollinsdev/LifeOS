@@ -1,9 +1,11 @@
-import { PlaceholderPage } from '@/shared/components/PlaceholderPage';
+import { NutritionPage } from '@/features/nutrition/pages/NutritionPage';
 
 /**
- * Nutrition page route (placeholder).
+ * Nutrition page route.
+ * 
+ * Renders the main nutrition tracking interface.
  */
 export default function NutritionRoute() {
-  return <PlaceholderPage title="Nutrition" description="Nutrition tracking coming soon" />;
+  return <NutritionPage />;
 }
 

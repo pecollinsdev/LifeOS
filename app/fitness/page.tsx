@@ -1,9 +1,11 @@
-import { PlaceholderPage } from '@/shared/components/PlaceholderPage';
+import { FitnessPage } from '@/features/fitness/pages/FitnessPage';
 
 /**
- * Fitness page route (placeholder).
+ * Fitness page route.
+ * 
+ * Renders the main fitness tracking interface.
  */
 export default function FitnessRoute() {
-  return <PlaceholderPage title="Fitness" description="Fitness tracking coming soon" />;
+  return <FitnessPage />;
 }
 

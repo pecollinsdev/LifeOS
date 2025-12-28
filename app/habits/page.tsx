@@ -1,9 +1,11 @@
-import { PlaceholderPage } from '@/shared/components/PlaceholderPage';
+import { HabitsPage } from '@/features/habits/pages/HabitsPage';
 
 /**
- * Habits page route (placeholder).
+ * Habits page route.
+ * 
+ * Renders the main habits tracking interface.
  */
 export default function HabitsRoute() {
-  return <PlaceholderPage title="Habits" description="Habit tracking coming soon" />;
+  return <HabitsPage />;
 }
 

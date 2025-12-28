@@ -48,7 +48,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <Input
         label="Task Title"
         value={title}

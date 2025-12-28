@@ -13,6 +13,16 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
  * Optimized for touch interactions with appropriate sizing
  * and visual feedback for mobile devices.
  */
+/**
+ * Reusable button component with iOS-style design.
+ * 
+ * Features:
+ * - iOS-style rounded corners (12px)
+ * - Smooth spring-like transitions
+ * - Subtle shadow on primary variant
+ * - Touch-optimized with proper sizing
+ * - Accessible focus states
+ */
 export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'md',
@@ -21,19 +31,20 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const baseClasses = 'font-medium rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95';
+  // iOS-style base classes with smooth transitions
+  const baseClasses = 'font-semibold rounded-xl transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.97] active:transition-transform active:duration-100';
   
   const variantClasses = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 active:bg-primary-800',
-    secondary: 'bg-neutral-200 text-neutral-900 hover:bg-neutral-300 focus:ring-neutral-500 active:bg-neutral-400',
-    outline: 'border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500 active:bg-primary-100',
+    primary: 'bg-primary-600 text-white shadow-sm hover:bg-primary-700 hover:shadow-md focus:ring-primary-500 active:bg-primary-800 active:shadow-sm',
+    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-400 active:bg-gray-300',
+    outline: 'border-2 border-primary-600 text-primary-600 bg-transparent hover:bg-primary-50 hover:border-primary-700 focus:ring-primary-500 active:bg-primary-100',
     ghost: 'text-primary-600 hover:bg-primary-50 focus:ring-primary-500 active:bg-primary-100',
   };
 
   const sizeClasses = {
     sm: 'px-4 py-2.5 text-sm min-h-[44px]',
-    md: 'px-4 py-3 text-base min-h-[44px]',
-    lg: 'px-6 py-3.5 text-lg min-h-[44px]',
+    md: 'px-5 py-3 text-base min-h-[48px]',
+    lg: 'px-6 py-4 text-lg min-h-[52px]',
   };
 
   const widthClass = fullWidth ? 'w-full' : '';

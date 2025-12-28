@@ -12,10 +12,14 @@ export interface PageHeaderProps {
 }
 
 /**
- * PageHeader component - Consistent header for all pages.
+ * PageHeader component with iOS-style design.
  * 
- * Mobile-optimized with safe area support and touch-friendly
- * navigation. Provides consistent spacing and typography.
+ * Features:
+ * - Clean, minimal header design
+ * - Smooth backdrop blur effect (iOS-style)
+ * - Proper safe area support
+ * - Touch-optimized navigation
+ * - Consistent typography hierarchy
  */
 export const PageHeader: React.FC<PageHeaderProps> = ({
   title,
@@ -26,21 +30,21 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   className = '',
 }) => {
   return (
-    <header className={`bg-surface border-b border-neutral-200 sticky top-0 z-10 pt-safe-top ${className}`}>
-      <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-4">
+    <header className={`bg-surface/80 backdrop-blur-xl border-b border-gray-200/60 sticky top-0 z-10 pt-safe-top ${className}`}>
+      <div className="max-w-2xl mx-auto px-5 py-4 flex items-center gap-4">
         {showBack && (
           <Link
             href={backHref}
-            className="p-2 -ml-2 text-neutral-600 hover:text-neutral-900 active:opacity-70 transition-opacity dark:text-neutral-400 dark:hover:text-neutral-100"
+            className="p-2 -ml-2 text-gray-600 hover:text-gray-900 active:opacity-70 active:scale-95 transition-all duration-150 rounded-lg hover:bg-gray-100"
             aria-label="Go back"
           >
             <Icon name="chevron-left" size={24} />
           </Link>
         )}
         <div className="flex-1 min-w-0">
-          <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-50">{title}</h1>
+          <h1 className="text-2xl font-bold text-text-primary tracking-tight">{title}</h1>
           {subtitle && (
-            <p className="text-sm text-neutral-600 dark:text-neutral-300 mt-0.5">{subtitle}</p>
+            <p className="text-sm text-text-secondary mt-1 font-medium">{subtitle}</p>
           )}
         </div>
         {rightAction && <div className="flex-shrink-0">{rightAction}</div>}

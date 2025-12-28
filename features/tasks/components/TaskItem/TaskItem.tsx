@@ -40,7 +40,7 @@ export const TaskItem: React.FC<TaskItemProps> = memo(({ task }) => {
       <div className="flex items-start gap-3">
         <button
           onClick={handleToggle}
-          className={`mt-0.5 flex-shrink-0 w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all active:scale-95 ${
+          className={`mt-0.5 flex-shrink-0 w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-200 active:scale-95 ${
             isCompleted
               ? 'bg-primary-600 border-primary-600'
               : 'border-gray-300 hover:border-primary-500 active:border-primary-600'
@@ -52,8 +52,10 @@ export const TaskItem: React.FC<TaskItemProps> = memo(({ task }) => {
 
         <div className="flex-1 min-w-0">
           <h3
-            className={`font-medium ${
-              isCompleted ? 'line-through text-gray-500' : 'text-gray-900'
+            className={`font-semibold ${
+              isCompleted 
+                ? 'line-through text-text-tertiary' 
+                : 'text-text-primary'
             }`}
           >
             {task.title}
@@ -61,14 +63,16 @@ export const TaskItem: React.FC<TaskItemProps> = memo(({ task }) => {
           {task.description && (
             <p
               className={`text-sm mt-1 ${
-                isCompleted ? 'text-gray-400' : 'text-gray-600'
+                isCompleted 
+                  ? 'text-text-tertiary' 
+                  : 'text-text-secondary'
               }`}
             >
               {task.description}
             </p>
           )}
           {task.dueDate && (
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-text-tertiary mt-2">
               Due: {new Date(task.dueDate).toLocaleDateString()}
             </p>
           )}
@@ -76,7 +80,7 @@ export const TaskItem: React.FC<TaskItemProps> = memo(({ task }) => {
 
         <button
           onClick={handleDelete}
-          className="flex-shrink-0 w-11 h-11 flex items-center justify-center text-gray-400 hover:text-red-600 active:text-red-700 active:scale-95 transition-all rounded-lg hover:bg-red-50 active:bg-red-100"
+          className="flex-shrink-0 w-11 h-11 flex items-center justify-center text-gray-400 hover:text-red-600 active:text-red-700 active:scale-95 transition-all duration-150 rounded-xl hover:bg-red-50 active:bg-red-100"
           aria-label="Delete task"
         >
           <Icon name="delete" size={20} />

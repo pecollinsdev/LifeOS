@@ -1,7 +1,27 @@
 // Models
 export type { Habit } from './models/Habit';
-export { createHabit } from './models/Habit';
+export { createHabit, getTodayDateString, isCompletedToday } from './models/Habit';
 
-// Placeholder for future implementation
-// Services, stores, and components will be added following the Tasks pattern
+// Services
+export { HabitService } from './services/HabitService';
+
+// Store
+export {
+  useHabitStore,
+  useHabits,
+  useHabitsCount,
+  useHabitActions,
+  useHabitStatus,
+} from './store/habitStore';
+
+// Components
+export {
+  HabitForm,
+  HabitItem,
+  HabitList,
+} from './components';
+export type { HabitFormProps, HabitItemProps } from './components';
+
+// Pages
+export { HabitsPage } from './pages/HabitsPage';
 

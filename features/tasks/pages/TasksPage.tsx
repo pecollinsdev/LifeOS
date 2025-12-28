@@ -22,7 +22,7 @@ export const TasksPage: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background pb-safe-bottom">
+    <div className="min-h-screen bg-background pb-24">
       <PageHeader
         title="Tasks"
         showBack
@@ -38,12 +38,12 @@ export const TasksPage: React.FC = () => {
         }
       />
 
-      <main className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+      <main className="max-w-2xl mx-auto px-5 py-6 space-y-5">
         {showForm && (
           <Card>
             <Suspense fallback={
               <div className="flex justify-center items-center py-8">
-                <p className="text-sm text-neutral-500">Loading form...</p>
+                <p className="text-sm text-text-tertiary">Loading form...</p>
               </div>
             }>
               <TaskForm onSuccess={() => setShowForm(false)} />

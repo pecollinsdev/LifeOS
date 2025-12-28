@@ -5,53 +5,56 @@ import { useTheme } from '@/lib/theme';
 import { Icon } from '../Icon';
 
 /**
- * ThemeToggle component - Toggle between light and dark themes.
+ * ThemeToggle component - iOS-style theme switcher.
  * 
- * Mobile-optimized button that cycles through:
- * - System (follows OS preference)
- * - Light (manual override)
- * - Dark (manual override)
+ * Features:
+ * - Simple light/dark toggle (no system option in UI)
+ * - Automatically respects system preference on first load
+ * - Manual toggle persists preference and overrides system
+ * - iOS-style icon button design
+ * - Smooth transitions
+ * - Mobile-optimized touch target (44x44px minimum)
+ * - Accessible with proper ARIA attributes
  * 
  * Placement: Typically in PageHeader rightAction slot.
+ * 
+ * Implementation:
+ * - Uses sun icon for light mode, moon icon for dark mode
+ * - Toggles between 'light' and 'dark' themes
+ * - ThemeProvider handles system preference detection automatically
  */
-export const ThemeToggle: React.FC<{ className?: string }> = ({ className = '' }) => {
-  const { theme, resolvedTheme, setTheme } = useTheme();
+export const ThemeToggle: React.FC<{ className?: string }> = ({ 
+  className = ''
+}) => {
+  const { theme, toggleTheme } = useTheme();
 
-  const handleToggle = () => {
-    // Cycle: system -> light -> dark -> system
-    if (theme === 'system') {
-      setTheme('light');
-    } else if (theme === 'light') {
-      setTheme('dark');
-    } else {
-      setTheme('system');
-    }
-  };
-
-  // Determine icon and label based on current state
-  const getIcon = () => {
-    if (theme === 'system') {
-      // Show current resolved theme icon when on system
-      return resolvedTheme === 'dark' ? 'moon' : 'sun';
-    }
-    return theme === 'dark' ? 'moon' : 'sun';
-  };
-
-  const getLabel = () => {
-    if (theme === 'system') {
-      return `System (${resolvedTheme})`;
-    }
-    return theme === 'dark' ? 'Dark mode' : 'Light mode';
-  };
+  const isDark = theme === 'dark';
+  const iconName = isDark ? 'moon' : 'sun';
+  const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
 
   return (
     <button
-      onClick={handleToggle}
-      className={`p-2 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 active:opacity-70 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:text-neutral-400 dark:hover:text-neutral-100 dark:hover:bg-neutral-800 ${className}`}
-      aria-label={getLabel()}
-      title={getLabel()}
+      onClick={toggleTheme}
+      className={`
+        p-2.5 rounded-xl 
+        text-text-secondary hover:text-text-primary hover:bg-surface-hover 
+        active:scale-95 
+        transition-all duration-150 
+        focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 
+        min-w-[44px] min-h-[44px] 
+        flex items-center justify-center
+        ${className}
+      `}
+      aria-label={label}
+      aria-pressed={isDark}
+      title={label}
+      type="button"
     >
-      <Icon name={getIcon()} size={20} />
+      <Icon 
+        name={iconName} 
+        size={22}
+        className="transition-transform duration-200"
+      />
     </button>
   );
 };

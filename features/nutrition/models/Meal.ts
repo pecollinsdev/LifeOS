@@ -28,6 +28,11 @@ export interface Meal extends IStorable {
 
 /**
  * Creates a new meal with default values.
+ * 
+ * @param name - The meal name (required)
+ * @param calories - The calorie count (required)
+ * @param overrides - Optional properties to override defaults
+ * @returns A new Meal object
  */
 export function createMeal(
   name: string,
@@ -35,15 +40,29 @@ export function createMeal(
   overrides?: Partial<Omit<Meal, 'id' | 'createdAt' | 'updatedAt' | 'name' | 'calories'>>
 ): Meal {
   const now = new Date().toISOString();
+  const today = new Date().toISOString().split('T')[0];
   return {
     id: '',
     name,
     type: MealType.BREAKFAST,
     calories,
-    date: now,
+    date: today,
     createdAt: now,
     updatedAt: now,
     ...overrides,
   };
+}
+
+/**
+ * Daily macro totals interface.
+ * Aggregates all macros for a given date.
+ */
+export interface DailyMacros {
+  date: string; // ISO date string (YYYY-MM-DD)
+  totalCalories: number;
+  totalProtein: number; // grams
+  totalCarbs: number; // grams
+  totalFats: number; // grams
+  mealCount: number;
 }
 

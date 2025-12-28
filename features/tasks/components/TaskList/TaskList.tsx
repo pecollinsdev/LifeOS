@@ -46,10 +46,10 @@ export const TaskList: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {activeTasks.length > 0 && (
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-50">Active Tasks</h2>
+          <h2 className="text-lg font-bold text-text-primary mb-1">Active Tasks</h2>
           {activeTasks.map((task) => (
             <TaskItem key={task.id} task={task} />
           ))}
@@ -58,7 +58,7 @@ export const TaskList: React.FC = () => {
 
       {completedTasks.length > 0 && (
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400">Completed</h2>
+          <h2 className="text-lg font-bold text-text-tertiary mb-1">Completed</h2>
           {completedTasks.map((task) => (
             <TaskItem key={task.id} task={task} />
           ))}
@@ -68,7 +68,7 @@ export const TaskList: React.FC = () => {
       {tasks.length === 0 && (
         <Alert variant="info">
           <div className="text-center py-4">
-            <p>No tasks yet. Create your first task!</p>
+            <p className="font-medium">No tasks yet. Create your first task!</p>
           </div>
         </Alert>
       )}

@@ -8,10 +8,13 @@ export interface AlertProps {
 }
 
 /**
- * Alert component for displaying messages, errors, and notifications.
+ * Alert component with iOS-style design.
  * 
- * Provides consistent styling for different alert types.
- * Mobile-optimized with appropriate spacing and contrast.
+ * Features:
+ * - iOS-style rounded corners
+ * - Subtle background colors with borders
+ * - Proper typography hierarchy
+ * - Mobile-optimized spacing
  */
 export const Alert: React.FC<AlertProps> = ({
   children,
@@ -27,7 +30,7 @@ export const Alert: React.FC<AlertProps> = ({
 
   return (
     <Card className={`${variantClasses[variant]} ${className}`} padding="md">
-      <div className="text-sm">{children}</div>
+      <div className="text-sm font-medium leading-relaxed">{children}</div>
     </Card>
   );
 };

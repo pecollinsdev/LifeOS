@@ -1,128 +1,147 @@
 'use client';
 
 import React, { useEffect, useMemo } from 'react';
-import Link from 'next/link';
-import { Card, Icon, PageHeader, Badge, ThemeToggle } from '@/shared/components';
+import { PageHeader, ThemeToggle } from '@/shared/components';
+import { FeatureCard } from '../FeatureCard';
 import { useActiveTasksCount, useTaskActions } from '@/features/tasks';
+import { useHabitsCount, useHabitActions } from '@/features/habits';
+import { useBalance, useFinanceActions } from '@/features/finance';
+import { useWorkouts, useFitnessActions } from '@/features/fitness';
+import { useMeals, useNutritionActions } from '@/features/nutrition';
 
 /**
- * Feature card configuration.
- * Each domain gets a card on the home dashboard.
- */
-interface FeatureCard {
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ComponentProps<typeof Icon>['name'];
-  href: string;
-  color: string;
-  stats?: string | number;
-}
-
-/**
- * HomeDashboard component - Main dashboard view.
+ * HomeDashboard component - iOS-style main dashboard view.
  * 
- * Displays an overview of all life domains with quick stats
- * and navigation to detailed views. Mobile-optimized grid layout.
+ * Features:
+ * - iOS-style gradient cards with smooth animations
+ * - Real-time stats from all feature modules
+ * - Touch-optimized interactions
+ * - Dark mode compatible
+ * - Mobile-first responsive layout
  * 
- * Performance: Uses selector to get only active tasks count, not entire tasks array.
+ * Performance: Uses selectors to get only needed data, not entire arrays.
  */
 export const HomeDashboard: React.FC = () => {
-  // Performance: Only subscribe to the count, not the entire tasks array
+  // Load data from all feature stores
   const activeTasksCount = useActiveTasksCount();
+  const habitsCount = useHabitsCount();
+  const { balance } = useBalance();
+  const workouts = useWorkouts();
+  const meals = useMeals();
+  
   const { loadTasks } = useTaskActions();
+  const { loadHabits } = useHabitActions();
+  const { loadTransactions } = useFinanceActions();
+  const { loadWorkouts } = useFitnessActions();
+  const { loadMeals } = useNutritionActions();
 
+  // Load initial data
   useEffect(() => {
     loadTasks();
-    // Performance: loadTasks is stable (from selector), but include it for safety
+    loadHabits();
+    loadTransactions();
+    loadWorkouts();
+    loadMeals();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Format currency for finance display
+  const formatCurrency = (amount: number): string => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
   // Performance: Memoize features array to prevent recreation on every render
-  const features: FeatureCard[] = useMemo(() => [
+  const features = useMemo(() => [
     {
       id: 'tasks',
       title: 'Tasks',
       description: 'Manage your to-dos',
-      icon: 'tasks',
+      icon: 'tasks' as const,
       href: '/tasks',
-      color: 'bg-blue-500',
+      gradientFrom: 'from-blue-500',
+      gradientTo: 'to-blue-600',
+      iconBg: 'bg-gradient-to-br from-blue-500 to-blue-600',
       stats: activeTasksCount > 0 ? activeTasksCount : undefined,
+      subtitle: activeTasksCount > 0 ? `${activeTasksCount} active` : undefined,
     },
     {
       id: 'habits',
       title: 'Habits',
       description: 'Track daily habits',
-      icon: 'habits',
+      icon: 'habits' as const,
       href: '/habits',
-      color: 'bg-green-500',
+      gradientFrom: 'from-green-500',
+      gradientTo: 'to-emerald-600',
+      iconBg: 'bg-gradient-to-br from-green-500 to-emerald-600',
+      stats: habitsCount > 0 ? habitsCount : undefined,
+      subtitle: habitsCount > 0 ? `${habitsCount} habit${habitsCount !== 1 ? 's' : ''}` : undefined,
     },
     {
       id: 'finance',
       title: 'Finance',
       description: 'Track expenses & budget',
-      icon: 'finance',
+      icon: 'finance' as const,
       href: '/finance',
-      color: 'bg-yellow-500',
+      gradientFrom: 'from-yellow-500',
+      gradientTo: 'to-amber-600',
+      iconBg: 'bg-gradient-to-br from-yellow-500 to-amber-600',
+      stats: balance !== 0 ? formatCurrency(balance) : undefined,
+      subtitle: balance !== 0 ? (balance >= 0 ? 'Positive balance' : 'Negative balance') : undefined,
     },
     {
       id: 'fitness',
       title: 'Fitness',
       description: 'Workouts & activity',
-      icon: 'fitness',
+      icon: 'fitness' as const,
       href: '/fitness',
-      color: 'bg-red-500',
+      gradientFrom: 'from-red-500',
+      gradientTo: 'to-rose-600',
+      iconBg: 'bg-gradient-to-br from-red-500 to-rose-600',
+      stats: workouts.length > 0 ? workouts.length : undefined,
+      subtitle: workouts.length > 0 ? `${workouts.length} workout${workouts.length !== 1 ? 's' : ''}` : undefined,
     },
     {
       id: 'nutrition',
       title: 'Nutrition',
       description: 'Meals & calories',
-      icon: 'nutrition',
+      icon: 'nutrition' as const,
       href: '/nutrition',
-      color: 'bg-purple-500',
+      gradientFrom: 'from-purple-500',
+      gradientTo: 'to-violet-600',
+      iconBg: 'bg-gradient-to-br from-purple-500 to-violet-600',
+      stats: meals.length > 0 ? meals.length : undefined,
+      subtitle: meals.length > 0 ? `${meals.length} meal${meals.length !== 1 ? 's' : ''}` : undefined,
     },
-  ], [activeTasksCount]);
+  ], [activeTasksCount, habitsCount, balance, workouts.length, meals.length]);
 
   return (
-    <div className="min-h-screen bg-background pb-safe-bottom">
+    <div className="min-h-screen bg-background pb-24">
       <PageHeader
         title="LifeOS"
         subtitle="Your personal life dashboard"
         rightAction={<ThemeToggle />}
       />
 
-      <main className="max-w-2xl mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 gap-3">
+      <main className="max-w-2xl mx-auto px-5 py-6">
+        {/* Welcome section */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-text-primary mb-1">
+            Welcome back
+          </h1>
+          <p className="text-sm text-text-secondary">
+            Here's an overview of your life domains
+          </p>
+        </div>
+
+        {/* Feature cards grid */}
+        <div className="grid grid-cols-1 gap-4">
           {features.map((feature) => (
-            <Link key={feature.id} href={feature.href}>
-              <Card className="hover:shadow-md transition-all active:scale-[0.98]">
-                <div className="flex items-center gap-4">
-                  <div
-                    className={`${feature.color} w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0`}
-                  >
-                    <Icon name={feature.icon} size={24} className="text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-50">
-                        {feature.title}
-                      </h2>
-                      {feature.stats !== undefined && (
-                        <Badge variant="primary">{feature.stats}</Badge>
-                      )}
-                    </div>
-                    <p className="text-sm text-neutral-600 dark:text-neutral-300 mt-0.5">
-                      {feature.description}
-                    </p>
-                  </div>
-                  <Icon
-                    name="chevron-right"
-                    size={20}
-                    className="text-neutral-400 dark:text-neutral-500 flex-shrink-0"
-                  />
-                </div>
-              </Card>
-            </Link>
+            <FeatureCard key={feature.id} {...feature} />
           ))}
         </div>
       </main>

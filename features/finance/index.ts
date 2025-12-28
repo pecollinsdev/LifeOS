@@ -1,8 +1,37 @@
 // Models
-export type { Transaction } from './models/Transaction';
-export { createTransaction } from './models/Transaction';
-export { TransactionType, TransactionCategory } from './models/Transaction';
+export type { Transaction, RecurringTransaction } from './models/Transaction';
+export {
+  createTransaction,
+  createRecurringTransaction,
+} from './models/Transaction';
+export {
+  TransactionType,
+  TransactionCategory,
+  RecurrenceFrequency,
+} from './models/Transaction';
 
-// Placeholder for future implementation
-// Services, stores, and components will be added following the Tasks pattern
+// Services
+export { TransactionService } from './services/TransactionService';
+
+// Store
+export {
+  useFinanceStore,
+  useTransactions,
+  useBalance,
+  useFinanceActions,
+  useFinanceStatus,
+  useRecurringTransactions,
+} from './store/financeStore';
+
+// Components
+export {
+  TransactionForm,
+  TransactionItem,
+  TransactionList,
+  BalanceDisplay,
+} from './components';
+export type { TransactionFormProps, TransactionItemProps } from './components';
+
+// Pages
+export { FinancePage } from './pages/FinancePage';
 

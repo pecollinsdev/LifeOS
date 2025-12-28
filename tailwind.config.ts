@@ -68,8 +68,22 @@ const config: Config = {
           dark: 'var(--color-info-dark)',
         },
         
-        // Neutral (Gray) - Keep for backward compatibility
+        // Neutral (Gray) - Mapped to CSS variables for theme support
+        // Both 'gray' and 'neutral' are available for consistency
         gray: {
+          50: 'var(--color-neutral-50)',
+          100: 'var(--color-neutral-100)',
+          200: 'var(--color-neutral-200)',
+          300: 'var(--color-neutral-300)',
+          400: 'var(--color-neutral-400)',
+          500: 'var(--color-neutral-500)',
+          600: 'var(--color-neutral-600)',
+          700: 'var(--color-neutral-700)',
+          800: 'var(--color-neutral-800)',
+          900: 'var(--color-neutral-900)',
+        },
+        // Alias for semantic clarity (neutral = gray)
+        neutral: {
           50: 'var(--color-neutral-50)',
           100: 'var(--color-neutral-100)',
           200: 'var(--color-neutral-200)',
@@ -112,20 +126,22 @@ const config: Config = {
         relaxed: 'var(--line-height-relaxed)',
       },
       
-      // Border Radius
+      // Border Radius - iOS-style
       borderRadius: {
         sm: 'var(--radius-sm)',
         md: 'var(--radius-md)',
         lg: 'var(--radius-lg)',
         xl: 'var(--radius-xl)',
+        '2xl': 'var(--radius-2xl)',
         full: 'var(--radius-full)',
       },
       
-      // Shadows
+      // Shadows - iOS-style
       boxShadow: {
         sm: 'var(--shadow-sm)',
         md: 'var(--shadow-md)',
         lg: 'var(--shadow-lg)',
+        xl: 'var(--shadow-xl)',
       },
     },
   },
