@@ -1,5 +1,5 @@
 import { IStorage } from '@/lib/storage';
-import { Task } from '../models/Task';
+import { Task, TaskStatus } from '../models/Task';
 import { generateId } from '@/lib/utils/uuid';
 
 /**
@@ -74,7 +74,7 @@ export class TaskService {
     }
     return this.updateTask({
       ...task,
-      status: 'completed' as const,
+      status: TaskStatus.COMPLETED,
       completedAt: new Date().toISOString(),
     });
   }
@@ -91,7 +91,7 @@ export class TaskService {
     }
     return this.updateTask({
       ...task,
-      status: 'todo' as const,
+      status: TaskStatus.TODO,
       completedAt: undefined,
     });
   }

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Task } from '../models/Task';
+import { Task, TaskStatus } from '../models/Task';
 import { TaskService } from '../services/TaskService';
 import { StorageFactory } from '@/lib/storage';
 
@@ -129,7 +129,7 @@ const store = create<TaskStore>((set, get) => {
       set({ isLoading: true, error: null });
       try {
         let updatedTask: Task;
-        if (task.status === 'completed') {
+        if (task.status === TaskStatus.COMPLETED) {
           updatedTask = await service.reopenTask(id);
         } else {
           updatedTask = await service.completeTask(id);
@@ -165,7 +165,7 @@ export const useTasks = () => store((state) => state.tasks);
  * Selector: Get active tasks count (optimized for HomeDashboard)
  */
 export const useActiveTasksCount = () => 
-  store((state) => state.tasks.filter((t) => t.status !== 'completed').length);
+  store((state) => state.tasks.filter((t) => t.status !== TaskStatus.COMPLETED).length);
 
 /**
  * Selector: Get only task actions (for components that don't need state)
